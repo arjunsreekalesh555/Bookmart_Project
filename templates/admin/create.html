@@ -1,0 +1,63 @@
+{% extends 'admin/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-3"><h2>CREATE BOOK</h2></div>
+    <div class="col-sm-3"><a href="{% url 'createauthor' %}" class="btn btn-warning">Add Author</a></div>
+</div>
+<br>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <input type="submit" value="Submit">
+
+    <br><br><br>
+
+    <h2>BOOK LIST</h2>
+    <br>
+
+    <table class="table">
+        <thead>
+              <th scope="col">NO</th>
+
+              <th scope="col" >BOOK NAME</th>
+              <th scope="col">BOOK AUTHOR</th>
+              <th scope="col">BOOK DESCRIPTION</th>
+              <th scope="col">BOOK QUANTITY</th>
+              <th scope="col">CATEGORY</th>
+              <th scope="col">GENRE</th>
+              <th scope="col">BOOK PRICE</th>
+
+              <th scope="col">ACTION</th>
+        </thead>
+
+        <tbody>
+        {% for book in books %}
+        <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.description }}</td>
+                <td>{{ book.quantity }}</td>
+                <td>{{ book.get_category_display }}</td>
+                <td>{{ book.get_genre_display }}</td>
+                <td>{{ book.price }}</td>
+
+                <td>
+                    <a href="{% url 'bookdetails' book.id %}" class="btn btn-primary">Details</a></br>
+                    <a href="{% url 'updatebook' book.id %}" class="btn btn-success">Update</a></br>
+                    <a href="{% url 'deletebook' book.id %}" class="btn btn-danger">Delete</a></br>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+<!-- author.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Authors</title>
+</head>
+<body>
+    <h1>Authors</h1>
+    <!-- Display existing authors in a dropdown -->
+    <form method="post">
+        {% csrf_token %}
+        <label for="author_name">Add New Author:</label>
+        <input type="text" name="author_name" id="author_name" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <h2>Existing Authors:</h2>
+    <select>
+        {% for author in authors %}
+            <option value="{{ author.name }}">{{ author.name }}</option>
+        {% endfor %}
+    </select>
+</body>
+</html>
